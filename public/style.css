@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    font-family: 'Times New Roman';
+    font-size: 12px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+
+#nav {
+    position: fixed;
+    z-index: 1;
+    width: 170px;
+    /* margin-top: 50px; */
+    margin-left: 8px;
+    /* background-color: lime; */
+}
+
+#nav p {
+    /* margin: 5px 0px; */
+}
+
+#nav p:first-of-type {
+    font-style: italic;
+}
+
+#nav a {
+    display: block;
+    text-decoration: none;
+    /* margin: 5px 0px; */
+}
+
+#nav a:visited {
+    color: black;
+}
+
+#works {
+    width: 100%;
+}
+
+.work {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    /* padding-top: 50px; */
+    /* border: 1px solid black; */
+    /* background-color: lime; */
+}
+
+.work img {
+    display: block;
+    max-width: 30%;
+    max-height: 80%;
+    /* margin: 0 auto; */
+    transition: opacity 0.3s;
+    cursor: pointer;
+}
+
+.workText {
+    position: absolute;
+    bottom: 30px;
+    right: 50px;
+}
+
+.workText p {
+    font-style: italic;
+    font-size: 10px;
+}
+
+#infoButton {
+    cursor: pointer;
+    width: 20px;
+}
+
+#info {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s;
+    background-color: white;
+    /* pointer-events: none; */
+}
+
+#info p {
+    text-align: center;
+    width: 35%;
+}
+
+#infoTitle {
+    font-style: italic;
+    margin-top: -100px;
+}
+
+#yuk a {
+    text-decoration: none;
+    font-style: italic;
+}
+
+a {
+    color: black;
+}
+
+a:active {
+    color: black;
+}
+
+a:visited {
+    color: black;
+}
