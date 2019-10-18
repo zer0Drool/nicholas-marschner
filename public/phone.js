@@ -1,3 +1,5 @@
+console.log('pheon')
+
 var globoTransitioning = false;
 
 var workImgs = document.getElementsByClassName('workImg');
@@ -56,6 +58,8 @@ var infoOpen = false;
 
 infoButton.addEventListener('click', () => {
     if (!infoOpen) {
+        console.log(bodyScrollLock);
+        bodyScrollLock.disableBodyScroll(info);
         info.style.display = 'flex';
         setTimeout(() => {
             info.style.opacity = '1';
@@ -65,16 +69,18 @@ infoButton.addEventListener('click', () => {
         info.style.opacity = '0';
         setTimeout(() => {
             info.style.display = 'none';
+            bodyScrollLock.enableBodyScroll(info);
             infoOpen = false;
         }, 350);
     }
 });
 
-info.addEventListener('click', () => {
-    if (infoOpen) {
+info.addEventListener('click', (e) => {
+    if (infoOpen && e.target.tagName.toLowerCase() !== 'a') {
         info.style.opacity = '0';
         setTimeout(() => {
             info.style.display = 'none';
+            bodyScrollLock.enableBodyScroll(info);
             infoOpen = false;
         }, 350);
     }

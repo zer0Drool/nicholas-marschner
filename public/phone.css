@@ -17,7 +17,6 @@ body {
     z-index: 1;
     width: 170px;
     /* margin-top: 50px; */
-    margin-left: 8px;
     /* background-color: lime; */
 }
 
@@ -58,7 +57,7 @@ body {
 #mirrorWrap, #hookWrap {
     display: flex;
     align-items: center;
-    width: 25%;
+    width: 70%;
     height: 70%;
 }
 
@@ -83,6 +82,7 @@ body {
 }
 
 #infoButton {
+    padding: 15px;
     cursor: pointer;
     width: 20px;
 }
@@ -104,12 +104,12 @@ body {
 
 #info p {
     text-align: center;
-    width: 35%;
+    width: 70%;
 }
 
 #infoTitle {
     font-style: italic;
-    margin-top: -100px;
+    /* margin-top: -100px; */
 }
 
 #yuk a {
@@ -127,33 +127,4 @@ a:active {
 
 a:visited {
     color: black;
-}
-
-@media screen and (max-width: 900px) {
-    #mirrorWrap, #hookWrap {
-        width: 45%;
-        height: 70%;
-    }
-}
-
-@media screen and (max-width: 700px) {
-    body {
-        position: fixed;
-        width: 700px;
-    }
-}
-
-@media screen and (max-height: 700px) {
-    body {
-        position: fixed;
-        height: 700px !important;
-    }
-
-    #mirrorWrap, #hookWrap {
-        height: 490px;;
-    }
-
-    .work {
-        height: 560px;
-    }
 }

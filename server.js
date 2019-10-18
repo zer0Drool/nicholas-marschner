@@ -10,7 +10,7 @@ app.use(compression());
 app.use(express.static('./public'));
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(req.device.type === 'desktop' ? __dirname + '/index.html' : __dirname + '/phone.html');
 });
 
 app.get('*', (req, res) => {
