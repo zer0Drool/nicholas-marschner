@@ -8,17 +8,20 @@
 body {
     width: 100vw;
     height: 100vh;
-    transition: opacity 1s;
+    transition: opacity 0.3s;
     opacity: 0;
 }
 
 #nav {
     position: fixed;
-    z-index: 2;
-    /* width: 220px; */
-    top: 50px;
-    margin-left: 8px;
+    z-index: 1;
+    width: 170px;
+    /* margin-top: 50px; */
     /* background-color: lime; */
+}
+
+#nav p {
+    /* margin: 5px 0px; */
 }
 
 #nav p:first-of-type {
@@ -28,6 +31,7 @@ body {
 #nav a {
     display: block;
     text-decoration: none;
+    /* margin: 5px 0px; */
 }
 
 #nav a:visited {
@@ -40,41 +44,36 @@ body {
 
 .work {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
     width: 100%;
-    height: 750px;
-    /* background-color: lime;
-    border: 2px solid black; */
+    height: 80vh;
+    /* padding-top: 50px; */
+    /* border: 1px solid black; */
+    /* background-color: lime; */
 }
 
 #mirrorWrap, #hookWrap {
     display: flex;
     align-items: center;
-    width: 25%;
+    width: 70%;
     height: 70%;
 }
 
 #mirrorWrap img, #hookWrap img {
     display: block;
-<<<<<<< HEAD
-    max-width: 400px;
-    max-height: 450px;
-=======
     max-width: 100%;
     max-height: 100%;
     margin: 0 auto;
->>>>>>> ad8f6ffc32ae2a3365ca01bb0ab44e6ac26a158a
     transition: opacity 0.3s;
     cursor: pointer;
 }
 
 .workText {
     position: absolute;
-    bottom: 50px;
-    text-align: center;
+    bottom: 30px;
+    right: 50px;
 }
 
 .workText p {
@@ -83,6 +82,7 @@ body {
 }
 
 #infoButton {
+    padding: 15px;
     cursor: pointer;
     width: 20px;
 }
@@ -104,12 +104,12 @@ body {
 
 #info p {
     text-align: center;
-    width: 35%;
+    width: 70%;
 }
 
 #infoTitle {
     font-style: italic;
-    margin-top: -100px;
+    /* margin-top: -100px; */
 }
 
 #yuk a {
@@ -127,50 +127,4 @@ a:active {
 
 a:visited {
     color: black;
-}
-
-<<<<<<< HEAD
-@media screen and (max-width: 410px) {
-
-    .work img {
-        max-width: 90%;
-    }
-
-    #info p {
-        width: 75%;
-    }
-
-    #infoTitle {
-        margin-top: 100px;
-    }
-
-=======
-@media screen and (max-width: 900px) {
-    #mirrorWrap, #hookWrap {
-        width: 45%;
-        height: 70%;
-    }
-}
-
-@media screen and (max-width: 700px) {
-    body {
-        position: fixed;
-        width: 700px;
-    }
-}
-
-@media screen and (max-height: 700px) {
-    body {
-        position: fixed;
-        height: 700px !important;
-    }
-
-    #mirrorWrap, #hookWrap {
-        height: 490px;;
-    }
-
-    .work {
-        height: 560px;
-    }
->>>>>>> ad8f6ffc32ae2a3365ca01bb0ab44e6ac26a158a
 }

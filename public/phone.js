@@ -1,3 +1,5 @@
+console.log('pheon')
+
 var globoTransitioning = false;
 
 var workImgs = document.getElementsByClassName('workImg');
@@ -10,34 +12,44 @@ setTimeout(() => {
     document.body.style.opacity = '1';
 }, 100);
 
-for (var i = 0; i < workImgs.length; i++) {
-    workImgs[i].addEventListener('click', (e) => {
-        if (!transitioning) {
-            transitioning = true;
-            if (e.target !== prevTarget) {
-                console.log('new target');
-                imgCount = 1;
-                console.log(imgCount);
-                prevTarget = e.target;
-            }
-            e.target.style.opacity = '0';
-            setTimeout(() => {
-                imgCount += 1;
-                console.log(imgCount);
-                if ((e.target.id === 'mirror' && imgCount > 4) || (e.target.id === 'hook' && imgCount > 4) || (e.target.id === 'casting' && imgCount > 2)) {
-                    imgCount = 1;
-                    console.log(imgCount);
-                }
-                e.target.src = `img/${e.target.id + imgCount}.jpg`;
-            }, 350);
-            setTimeout(() => {
-                e.target.style.opacity = '1';
-            }, 450);
-            setTimeout(() => {
-                transitioning = false;
-            }, 800);
-        };
-    });
+var dpr = window.devicePixelRatio || 1;
+
+var mirrorSrcs = [];
+var mirrorObjs = [];
+var mirrorLoader = 0;
+var mirrorLoaded = false;
+
+for (var i = 0; i < 4; i++) {
+    mirrorSrcs.push(`img/mirror${i + 1}.jpeg`);
+    var mirrorObj = new Image();
+    mirrorObj.src = mirrorSrcs[i];
+    mirrorObj.className = 'mirrorImg';
+    mirrorObj.onload = function() {
+        mirrorLoader++;
+        if (mirrorLoader === 4) {
+            mirrorLoaded = true;
+        }
+    }
+    mirrorObjs.push(mirrorObj);
+}
+
+var hookSrcs = [];
+var hookObjs = [];
+var hookLoader = 0;
+var hookLoaded = false;
+
+for (var i = 0; i < 4; i++) {
+    hookSrcs.push(`img/hook${i + 1}.jpeg`);
+    var hookObj = new Image();
+    hookObj.src = hookSrcs[i];
+    hookObj.className = 'hookImg';
+    hookObj.onload = function() {
+        hookLoader++;
+        if (hookLoader === 4) {
+            hookLoaded = true;
+        }
+    }
+    hookObjs.push(hookObj);
 }
 
 var infoButton = document.getElementById('infoButton');
@@ -46,9 +58,10 @@ var infoOpen = false;
 
 infoButton.addEventListener('click', () => {
     if (!infoOpen) {
+        console.log(bodyScrollLock);
+        bodyScrollLock.disableBodyScroll(info);
         info.style.display = 'flex';
         setTimeout(() => {
-            bodyScrollLock.disableBodyScroll(document.body);
             info.style.opacity = '1';
             infoOpen = true;
         }, 100);
@@ -56,19 +69,19 @@ infoButton.addEventListener('click', () => {
         info.style.opacity = '0';
         setTimeout(() => {
             info.style.display = 'none';
+            bodyScrollLock.enableBodyScroll(info);
             infoOpen = false;
-            bodyScrollLock.enableBodyScroll(document.body);
         }, 350);
     }
 });
 
-info.addEventListener('click', () => {
-    if (infoOpen) {
+info.addEventListener('click', (e) => {
+    if (infoOpen && e.target.tagName.toLowerCase() !== 'a') {
         info.style.opacity = '0';
         setTimeout(() => {
             info.style.display = 'none';
+            bodyScrollLock.enableBodyScroll(info);
             infoOpen = false;
-            bodyScrollLock.enableBodyScroll(document.body);
         }, 350);
     }
 });
