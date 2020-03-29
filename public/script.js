@@ -58,7 +58,6 @@ function preloadImgs()
 preloadImgs();
 
 function init() {
-    console.log(imgs);
     document.body.style.opacity = '1';
 }
 
@@ -79,7 +78,6 @@ for (var i = 0; i < workImgs.length; i++) {
                         transitioning = false;
                     }, 350);
                 };
-                console.log(e.target.src);
             }, 350);
         };
     });
