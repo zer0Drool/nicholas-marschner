@@ -82,10 +82,10 @@ for (var i = 0; i < workImgs.length; i++) {
             }, 350);
             setTimeout(() => {
                 e.target.style.opacity = '1';
-            }, 450);
+            }, 550);
             setTimeout(() => {
                 transitioning = false;
-            }, 800);
+            }, 900);
         };
     });
 }
