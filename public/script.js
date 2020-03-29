@@ -5,10 +5,48 @@ var imgCount = 1;
 var transitioning = false;
 var prevTarget = null;
 var nav = document.getElementById('nav');
+var imgs = [];
+var imgLoadCount = 0;
 
-setTimeout(() => {
+function preloadImgs()
+{
+    for (var i = 1; i < 3; i++) {
+        var img = new Image();
+        img.src = `/img/casting${i}.jpg`;
+        img.onload = imgs.push(img);
+        imgLoadCount++;
+        if (imgLoadCount === 10) {
+            init();
+        }
+    }
+
+    for (var i = 1; i < 5; i++) {
+        var img = new Image();
+        img.src = `/img/hook{i}.jpg`;
+        img.onload = imgs.push(img);
+        imgLoadCount++;
+        if (imgLoadCount === 10) {
+            init();
+        }
+    }
+
+    for (var i = 1; i < 5; i++) {
+        var img = new Image();
+        img.src = `/img/mirror{i}.jpg`;
+        img.onload = imgs.push(img);
+        imgLoadCount++;
+        if (imgLoadCount === 10) {
+            init();
+        }
+    }
+}
+
+preloadImgs();
+
+function init() {
+    console.log(imgs);
     document.body.style.opacity = '1';
-}, 100);
+}
 
 for (var i = 0; i < workImgs.length; i++) {
     workImgs[i].addEventListener('click', (e) => {
