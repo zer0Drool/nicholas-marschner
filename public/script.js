@@ -73,15 +73,14 @@ for (var i = 0; i < workImgs.length; i++) {
                     imgs[e.target.id].pos = 0;
                 }
                 e.target.src = imgs[e.target.id].srcs[imgs[e.target.id].pos].src;
-                e.target.onload = console.log('loaded');
+                e.target.onload = () => {
+                    e.target.style.opacity = '1';
+                    setTimeout(() => {
+                        transitioning = false;
+                    }, 350);
+                };
                 console.log(e.target.src);
             }, 350);
-            setTimeout(() => {
-                e.target.style.opacity = '1';
-            }, 750);
-            setTimeout(() => {
-                transitioning = false;
-            }, 1100);
         };
     });
 }
