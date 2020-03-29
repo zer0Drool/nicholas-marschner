@@ -7,9 +7,18 @@ var firstClick = false;
 var prevTarget = null;
 var nav = document.getElementById('nav');
 var imgs = {
-    casting: [],
-    hook: [],
-    mirror: []
+    casting: {
+        srcs: [],
+        pos: 0
+    },
+    hook: {
+        srcs: [],
+        pos: 0
+    },
+    mirror: {
+        srcs: [],
+        pos: 0
+    }
 };
 var imgLoadCount = 0;
 
@@ -18,7 +27,7 @@ function preloadImgs()
     for (var i = 1; i < 3; i++) {
         var img = new Image();
         img.src = `/img/casting${i}.jpg`;
-        img.onload = imgs.casting.push(img);
+        img.onload = imgs.casting.srcs.push(img);
         imgLoadCount++;
         if (imgLoadCount === 10) {
             init();
@@ -28,7 +37,7 @@ function preloadImgs()
     for (var i = 1; i < 5; i++) {
         var img = new Image();
         img.src = `/img/hook${i}.jpg`;
-        img.onload = imgs.hook.push(img);
+        img.onload = imgs.hook.srcs.push(img);
         imgLoadCount++;
         if (imgLoadCount === 10) {
             init();
@@ -38,7 +47,7 @@ function preloadImgs()
     for (var i = 1; i < 5; i++) {
         var img = new Image();
         img.src = `/img/mirror${i}.jpg`;
-        img.onload = imgs.mirror.push(img);
+        img.onload = imgs.mirror.srcs.push(img);
         imgLoadCount++;
         if (imgLoadCount === 10) {
             init();
@@ -57,35 +66,22 @@ for (var i = 0; i < workImgs.length; i++) {
     workImgs[i].addEventListener('click', (e) => {
         if (!transitioning) {
             transitioning = true;
-            if (e.target !== prevTarget && firstClick) {
-                console.log('new target');
-                imgCount = -1;
-                console.log(imgCount);
-                prevTarget = e.target;
-            }
-            if (!firstClick) {
-                firstClick = true;
-                console.log('first click:', firstClick);
-            }
             e.target.style.opacity = '0';
             setTimeout(() => {
-                imgCount += 1;
-                console.log(imgCount);
-                if (imgCount > imgs[e.target.id].length - 1) {
-                    imgCount = 0;
-                    console.log(imgCount);
+                imgs[e.target.id].pos += 1;
+                if (imgs[e.target.id].pos > imgs[e.target.id].srcs.length - 1) {
+                    imgs[e.target.id].pos = 0;
                 }
-                e.target.src = imgs[e.target.id][imgCount].src;
+                e.target.src = imgs[e.target.id].srcs[imgs[e.target.id].pos].src;
                 e.target.onload = console.log('loaded');
-                console.log(imgs[e.target.id][imgCount]);
                 console.log(e.target.src);
             }, 350);
             setTimeout(() => {
                 e.target.style.opacity = '1';
-            }, 550);
+            }, 750);
             setTimeout(() => {
                 transitioning = false;
-            }, 900);
+            }, 1100);
         };
     });
 }
