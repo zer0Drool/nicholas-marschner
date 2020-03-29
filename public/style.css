@@ -63,6 +63,10 @@ body {
     text-align: center;
 }
 
+.workText:first-of-type {
+    bottom: -10px;
+}
+
 .workText p {
     font-style: italic;
     font-size: 10px;
