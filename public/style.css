@@ -7,21 +7,17 @@
 body {
     width: 100vw;
     height: 100vh;
-    transition: opacity 0.3s;
+    transition: opacity 1s;
     opacity: 0;
 }
 
 #nav {
     position: fixed;
-    z-index: 1;
-    width: 170px;
-    /* margin-top: 50px; */
+    z-index: 2;
+    /* width: 220px; */
+    top: 50px;
     margin-left: 8px;
     /* background-color: lime; */
-}
-
-#nav p {
-    /* margin: 5px 0px; */
 }
 
 #nav p:first-of-type {
@@ -31,7 +27,6 @@ body {
 #nav a {
     display: block;
     text-decoration: none;
-    /* margin: 5px 0px; */
 }
 
 #nav a:visited {
@@ -44,29 +39,28 @@ body {
 
 .work {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
     width: 100%;
-    height: 80vh;
-    /* padding-top: 50px; */
-    /* border: 1px solid black; */
-    /* background-color: lime; */
+    height: 750px;
+    /* background-color: lime;
+    border: 2px solid black; */
 }
 
 .work img {
     display: block;
-    max-width: 30%;
-    max-height: 80%;
-    /* margin: 0 auto; */
+    max-width: 400px;
+    max-height: 450px;
     transition: opacity 0.3s;
     cursor: pointer;
 }
 
 .workText {
     position: absolute;
-    bottom: 30px;
-    right: 50px;
+    bottom: 50px;
+    text-align: center;
 }
 
 .workText p {
@@ -92,7 +86,6 @@ body {
     opacity: 0;
     transition: opacity 0.3s;
     background-color: white;
-    /* pointer-events: none; */
 }
 
 #info p {
@@ -120,4 +113,20 @@ a:active {
 
 a:visited {
     color: black;
+}
+
+@media screen and (max-width: 410px) {
+
+    .work img {
+        max-width: 90%;
+    }
+
+    #info p {
+        width: 75%;
+    }
+
+    #infoTitle {
+        margin-top: 100px;
+    }
+
 }

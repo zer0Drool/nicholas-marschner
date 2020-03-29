@@ -5,15 +5,8 @@ var prevTarget = null;
 var nav = document.getElementById('nav');
 
 setTimeout(() => {
-    console.log(workImgs[0].getBoundingClientRect().top);
-    nav.style.top = `${workImgs[0].getBoundingClientRect().top}px`;
     document.body.style.opacity = '1';
 }, 100);
-
-window.addEventListener('resize', () => {
-    console.log(workImgs[0].getBoundingClientRect().top);
-    nav.style.top = `${workImgs[0].getBoundingClientRect().top}px`;
-})
 
 for (var i = 0; i < workImgs.length; i++) {
     workImgs[i].addEventListener('click', (e) => {
@@ -29,7 +22,7 @@ for (var i = 0; i < workImgs.length; i++) {
             setTimeout(() => {
                 imgCount += 1;
                 console.log(imgCount);
-                if ((e.target.id === 'mirror' && imgCount > 4) || (e.target.id === 'hook' && imgCount > 4)) {
+                if ((e.target.id === 'mirror' && imgCount > 4) || (e.target.id === 'hook' && imgCount > 4) || (e.target.id === 'casting' && imgCount > 2)) {
                     imgCount = 1;
                     console.log(imgCount);
                 }
@@ -53,6 +46,7 @@ infoButton.addEventListener('click', () => {
     if (!infoOpen) {
         info.style.display = 'flex';
         setTimeout(() => {
+            bodyScrollLock.disableBodyScroll(document.body);
             info.style.opacity = '1';
             infoOpen = true;
         }, 100);
@@ -61,6 +55,7 @@ infoButton.addEventListener('click', () => {
         setTimeout(() => {
             info.style.display = 'none';
             infoOpen = false;
+            bodyScrollLock.enableBodyScroll(document.body);
         }, 350);
     }
 })
@@ -71,6 +66,7 @@ info.addEventListener('click', () => {
         setTimeout(() => {
             info.style.display = 'none';
             infoOpen = false;
+            bodyScrollLock.enableBodyScroll(document.body);
         }, 350);
     }
 })
