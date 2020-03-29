@@ -76,6 +76,7 @@ for (var i = 0; i < workImgs.length; i++) {
                     console.log(imgCount);
                 }
                 e.target.src = imgs[e.target.id][imgCount].src;
+                e.target.onload = console.log('loaded');
                 console.log(imgs[e.target.id][imgCount]);
                 console.log(e.target.src);
             }, 350);
