@@ -50,6 +50,7 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per
 })
 .then(() => {
 
+    let workDivs = [];
     let worksImgs = {};
     let allImgLoadCount = 0;
     let worksArr = Object.entries(works);
@@ -57,6 +58,7 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per
 
     worksArr.map(work => {
         let workDiv = document.createElement('div');
+        workDivs.push(workDiv);
         workDiv.classList.add('work');
 
         worksImgs[work[0]] = [];
@@ -72,7 +74,7 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per
 
                     let workText = document.createElement('div');
                     let titleX = document.createElement('p');
-                    titleX.innerText = work.title;
+                    titleX.innerText = work[0];
                     workText.appendChild(titleX);
                     if (work[1].materials) {
                         let materialsX = document.createElement('p');
@@ -94,6 +96,9 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per
 
                     allImgLoadCount++;
                     if (allImgLoadCount === worksArr.length) {
+                        for (var i = 0; i < workDivs.length; i++) {
+                            worksWrap.appendChild(workDivs[i]);
+                        };
                         dataFetchCount++;
                         if (dataFetchCount === 3) {
                             init();
@@ -109,6 +114,7 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per
             // img.src = work[1].media[i].url;
 
         };
+        console.log(workDivs);
 
     });
 
