@@ -22,6 +22,7 @@ let dataFetchCount = 0;
 // get work data
 let works = {};
 let worksWrap = document.getElementById('works');
+let worksImgs = {};
 axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per_page=100')
 .then(res => {
     res.data.map(post => {
@@ -51,23 +52,23 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per
 .then(() => {
 
     let workDivs = [];
-    let worksImgs = {};
     let allImgLoadCount = 0;
     let worksArr = Object.entries(works);
-    console.log(worksArr);
+    // console.log(worksArr);
 
     worksArr.map(work => {
         let workDiv = document.createElement('div');
         workDivs.push(workDiv);
         workDiv.classList.add('work');
 
+        let imgLoadCount = 0;
         worksImgs[work[0]] = [];
         for (var i = 0; i < work[1].media.length; i++) {
 
             let img = document.createElement('img');
             img.onload = () => {
-                worksImgs[work[0]].push(img);
-                if (worksImgs[work[0]].length === work[1].media.length) {
+                imgLoadCount++;
+                if (imgLoadCount === work[1].media.length) {
 
                     console.log(`all imgs for ${work[0]} loaded`);
                     workDiv.appendChild(worksImgs[work[0]][0]);
@@ -111,10 +112,10 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per
             let urlX = work[1].media[i].url.split('78/');
             let url = `${urlX[0]}78/nickysofttouch/${urlX[1]}`;
             img.src = url;
+            worksImgs[work[0]].push(img);
             // img.src = work[1].media[i].url;
 
         };
-        console.log(workDivs);
 
     });
 
@@ -131,7 +132,6 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/info/?per_
 .then(res => {
 
         let data = res.data[0].acf;
-        console.log(data);
         information = {
             bio: data.bio,
             insta: data.insta,
@@ -176,7 +176,6 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/exhibition
 .then(() => {
 
     let exhibitionsArr = Object.entries(exhibitions);
-    console.log(exhibitionsArr);
     for (var i = 0; i < exhibitionsArr.length; i++) {
         exhibitionsWrap.innerHTML = exhibitionsWrap.innerHTML + `<p>${exhibitionsArr[i][0]} - ${exhibitionsArr[i][1].location} - ${exhibitionsArr[i][1].year}</p>`;
         if (i === exhibitionsArr.length - 1) {
@@ -192,126 +191,82 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/exhibition
 
 
 function init() {
-    console.log('yeet');
+    console.log('lets go');
+    console.log(worksImgs);
+
+    clearInterval(loadingInt);
+    title.innerText = 'Nicholas Marschner';
+    let contactWrap = document.getElementById('contactWrap');
+    let worksWrap = document.getElementById('works');
+
+    contactWrap.style.opacity = '1';
+    worksWrap.style.opacity = '1';
+
+    var workImgsXX = document.getElementsByClassName('workImg');
+    var transitioning = false;
+    var firstClick = false;
+    var prevTarget = null;
+    let positions = {};
+
+    let worksImgsArr = Object.entries(worksImgs);
+    for (var i = 0; i < worksImgsArr.length; i++) {
+        positions[worksImgsArr[i][0]] = 0;
+    };
+
+    console.log(worksImgs);
+
+    console.log(positions);
+
+    for (var i = 0; i < workImgsXX.length; i++) {
+        workImgsXX[i].addEventListener('click', (e) => {
+            if (!transitioning) {
+                transitioning = true;
+                // let target = e.target.alt;
+                console.log(positions[e.target.alt], worksImgs[e.target.alt]);
+                console.log(worksImgs[e.target.alt][positions[e.target.alt]].src);
+                positions[e.target.alt] = positions[e.target.alt] < worksImgs[e.target.alt].length - 1 ? positions[e.target.alt] + 1 : 0;
+                console.log(positions[e.target.alt]);
+                console.log(worksImgs[e.target.alt][positions[e.target.alt]].src);
+                e.target.src = worksImgs[e.target.alt][positions[e.target.alt]].src;
+                transitioning = false;
+            };
+        });
+    }
+
+    var infoButton = document.getElementById('infoButton');
+    var info = document.getElementById('info');
+    var infoOpen = false;
+
+    function openInfo() {
+        if (!infoOpen) {
+            info.style.display = 'flex';
+            setTimeout(() => {
+                bodyScrollLock.disableBodyScroll(document.body);
+                info.style.opacity = '1';
+                infoOpen = true;
+            }, 100);
+        };
+    };
+
+    function closeInfo() {
+        if (infoOpen) {
+            info.style.opacity = '0';
+            setTimeout(() => {
+                info.style.display = 'none';
+                infoOpen = false;
+                bodyScrollLock.enableBodyScroll(document.body);
+            }, 350);
+        };
+    };
+
+    infoButton.addEventListener('click', () => {
+        if (infoOpen) {
+            closeInfo();
+        } else {
+            openInfo();
+        };
+    });
+
+    info.addEventListener('click', closeInfo);
+
 };
-
-
-
-
-// var globoTransitioning = false;
-//
-// var workImgs = document.getElementsByClassName('workImg');
-// var imgCount = 0;
-// var transitioning = false;
-// var firstClick = false;
-// var prevTarget = null;
-// var nav = document.getElementById('nav');
-// var imgs = {
-//     casting: {
-//         srcs: [],
-//         pos: 0
-//     },
-//     hook: {
-//         srcs: [],
-//         pos: 0
-//     },
-//     mirror: {
-//         srcs: [],
-//         pos: 0
-//     }
-// };
-// var imgLoadCount = 0;
-//
-// function preloadImgs()
-// {
-//     for (var i = 1; i < 3; i++) {
-//         var img = new Image();
-//         img.src = `/img/casting${i}.jpg`;
-//         img.onload = imgs.casting.srcs.push(img);
-//         imgLoadCount++;
-//         if (imgLoadCount === 10) {
-//             init();
-//         }
-//     }
-//
-//     for (var i = 1; i < 5; i++) {
-//         var img = new Image();
-//         img.src = `/img/hook${i}.jpg`;
-//         img.onload = imgs.hook.srcs.push(img);
-//         imgLoadCount++;
-//         if (imgLoadCount === 10) {
-//             init();
-//         }
-//     }
-//
-//     for (var i = 1; i < 5; i++) {
-//         var img = new Image();
-//         img.src = `/img/mirror${i}.jpg`;
-//         img.onload = imgs.mirror.srcs.push(img);
-//         imgLoadCount++;
-//         if (imgLoadCount === 10) {
-//             init();
-//         }
-//     }
-// }
-//
-// preloadImgs();
-//
-// function init() {
-//     document.body.style.opacity = '1';
-// }
-//
-// for (var i = 0; i < workImgs.length; i++) {
-//     workImgs[i].addEventListener('click', (e) => {
-//         if (!transitioning) {
-//             transitioning = true;
-//             e.target.style.opacity = '0';
-//             setTimeout(() => {
-//                 imgs[e.target.id].pos += 1;
-//                 if (imgs[e.target.id].pos > imgs[e.target.id].srcs.length - 1) {
-//                     imgs[e.target.id].pos = 0;
-//                 }
-//                 e.target.src = imgs[e.target.id].srcs[imgs[e.target.id].pos].src;
-//                 e.target.onload = () => {
-//                     e.target.style.opacity = '1';
-//                     setTimeout(() => {
-//                         transitioning = false;
-//                     }, 350);
-//                 };
-//             }, 350);
-//         };
-//     });
-// }
-//
-// var infoButton = document.getElementById('infoButton');
-// var info = document.getElementById('info');
-// var infoOpen = false;
-//
-// infoButton.addEventListener('click', () => {
-//     if (!infoOpen) {
-//         info.style.display = 'flex';
-//         setTimeout(() => {
-//             bodyScrollLock.disableBodyScroll(document.body);
-//             info.style.opacity = '1';
-//             infoOpen = true;
-//         }, 100);
-//     } else {
-//         info.style.opacity = '0';
-//         setTimeout(() => {
-//             info.style.display = 'none';
-//             infoOpen = false;
-//             bodyScrollLock.enableBodyScroll(document.body);
-//         }, 350);
-//     }
-// });
-//
-// info.addEventListener('click', () => {
-//     if (infoOpen) {
-//         info.style.opacity = '0';
-//         setTimeout(() => {
-//             info.style.display = 'none';
-//             infoOpen = false;
-//             bodyScrollLock.enableBodyScroll(document.body);
-//         }, 350);
-//     }
-// });

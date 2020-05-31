@@ -37,8 +37,17 @@ body {
     color: black;
 }
 
+
+#contactWrap {
+    opacity: 0;
+    transition: opacity 0.5s linear;
+}
+
 #works {
     width: 100%;
+    margin-top: 50px;
+    opacity: 0;
+    transition: opacity 0.5s linear;
 }
 
 .work {
@@ -48,9 +57,11 @@ body {
     align-items: center;
     position: relative;
     width: 100%;
-    height: 750px;
-    /* background-color: lime;
-    border: 2px solid black; */
+    margin-bottom: 200px;
+}
+
+.work:last-of-type {
+    margin-bottom: 50px;
 }
 
 .work img {
@@ -61,9 +72,11 @@ body {
     cursor: pointer;
 }
 
-.workText {
-    position: absolute;
-    bottom: 50px;
+.work div {
+    /* position: absolute; */
+    max-width: 300px;
+    margin-top: 50px;
+    font-style: italic;
     text-align: center;
 }
 
@@ -98,12 +111,21 @@ body {
 
 #info p {
     text-align: center;
-    width: 35%;
+    /* width: 35%; */
 }
 
 #infoTitle {
     font-style: italic;
-    margin-top: -100px;
+    /* margin-top: -100px; */
+}
+
+#infoText {
+    width: 380px;
+    margin-bottom: 40px;
+}
+
+#exhibitionsWrap {
+    margin-bottom: 40px;
 }
 
 #yuk a {
