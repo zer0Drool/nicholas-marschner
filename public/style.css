@@ -57,22 +57,30 @@ body {
     align-items: center;
     position: relative;
     width: 100%;
-    margin-bottom: 200px;
+    margin-bottom: 20vh;
 }
 
 .work:last-of-type {
     margin-bottom: 50px;
 }
 
-.work img {
-    display: block;
-    max-width: 400px;
-    max-height: 450px;
+.workImg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    max-width: 90%;
+    overflow: hidden;
+    /* background-color: lime; */
     transition: opacity 0.3s;
+}
+
+.workImg img {
+    width: 100%;
     cursor: pointer;
 }
 
-.work div {
+.workText {
     /* position: absolute; */
     max-width: 300px;
     margin-top: 50px;
@@ -147,16 +155,42 @@ a:visited {
 
 @media screen and (max-width: 410px) {
 
-    .work img {
+    /* .work img {
         max-width: 90%;
-    }
+    } */
 
-    #info p {
+    /* #info p {
         width: 75%;
     }
 
     #infoTitle {
         margin-top: 100px;
+    } */
+
+}
+
+@media (hover: none) and (pointer: coarse) {
+
+    #nav {
+        position: absolute;
+        margin-left: 5%;
+    }
+
+    #works {
+        margin-top: 200px;
+        margin-bottom: 200px;
+    }
+
+    #info {
+        z-index: 5;
+    }
+
+    #infoText {
+        width: 90%;
+    }
+
+    .workText:last-of-type {
+        padding-bottom: 50px;
     }
 
 }

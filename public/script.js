@@ -23,7 +23,8 @@ let dataFetchCount = 0;
 let works = {};
 let worksWrap = document.getElementById('works');
 let worksImgs = {};
-axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per_page=100')
+axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/works/?per_page=100', { headers: {'Access-Control-Allow-Origin': 'http://nicholasm.byethost32.com'} })
+// axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per_page=100')
 .then(res => {
     res.data.map(post => {
 
@@ -60,6 +61,9 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per
         let workDiv = document.createElement('div');
         workDivs.push(workDiv);
         workDiv.classList.add('work');
+        let imgDiv = document.createElement('div');
+        imgDiv.classList.add('workImg');
+        workDiv.appendChild(imgDiv);
 
         let imgLoadCount = 0;
         worksImgs[work[0]] = [];
@@ -71,9 +75,11 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per
                 if (imgLoadCount === work[1].media.length) {
 
                     console.log(`all imgs for ${work[0]} loaded`);
-                    workDiv.appendChild(worksImgs[work[0]][0]);
+                    console.log(worksImgs[work[0]][0].src);
+                    imgDiv.appendChild(worksImgs[work[0]][0]);
 
                     let workText = document.createElement('div');
+                    workText.classList.add('workText');
                     let titleX = document.createElement('p');
                     titleX.innerText = work[0];
                     workText.appendChild(titleX);
@@ -107,7 +113,6 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per
                     };
                 };
             };
-            img.classList.add('workImg');
             img.alt = work[0];
             let urlX = work[1].media[i].url.split('78/');
             let url = `${urlX[0]}78/nickysofttouch/${urlX[1]}`;
@@ -128,7 +133,8 @@ let mail = document.getElementById('mail');
 let insta = document.getElementById('insta');
 let phone = document.getElementById('phone');
 let infoText = document.getElementById('infoText');
-axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/info/?per_page=100')
+axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/info/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
+// axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/info/?per_page=100')
 .then(res => {
 
         let data = res.data[0].acf;
@@ -160,7 +166,8 @@ axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/info/?per_
 // get exhibitions data
 let exhibitions = {};
 let exhibitionsWrap = document.getElementById('exhibitionsWrap');
-axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/exhibitions/?per_page=100')
+axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/exhibitions/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
+// axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/exhibitions/?per_page=100')
 .then(res => {
     res.data.map(post => {
 
@@ -210,9 +217,12 @@ function init() {
 
     let worksImgsArr = Object.entries(worksImgs);
     for (var i = 0; i < worksImgsArr.length; i++) {
+        for (var j = 0; j < worksImgsArr[i][1].length; j++) {
+            console.log(worksImgsArr[i][1][j].src);
+        }
+        // console.log(worksImgsArr[i][]);
         positions[worksImgsArr[i][0]] = 0;
     };
-
     console.log(worksImgs);
 
     console.log(positions);
@@ -221,17 +231,23 @@ function init() {
         workImgsXX[i].addEventListener('click', (e) => {
             if (!transitioning) {
                 transitioning = true;
-                // let target = e.target.alt;
-                console.log(positions[e.target.alt], worksImgs[e.target.alt]);
-                console.log(worksImgs[e.target.alt][positions[e.target.alt]].src);
-                positions[e.target.alt] = positions[e.target.alt] < worksImgs[e.target.alt].length - 1 ? positions[e.target.alt] + 1 : 0;
-                console.log(positions[e.target.alt]);
-                console.log(worksImgs[e.target.alt][positions[e.target.alt]].src);
-                e.target.src = worksImgs[e.target.alt][positions[e.target.alt]].src;
-                transitioning = false;
+                positions[e.target.alt]++;
+                if (positions[e.target.alt] === worksImgs[e.target.alt].length) {
+                    positions[e.target.alt] = 0;
+                };
+                let targetX = e.target.parentNode;
+                targetX.style.opacity = '0';
+                setTimeout(function() {
+                    targetX.appendChild(worksImgs[e.target.alt][positions[e.target.alt]]);
+                    targetX.removeChild(targetX.children[0]);
+                    targetX.style.opacity = '1';
+                    setTimeout(() => {
+                        transitioning = false;
+                    }, 350);
+                }, 350);
             };
         });
-    }
+    };
 
     var infoButton = document.getElementById('infoButton');
     var info = document.getElementById('info');
@@ -242,26 +258,28 @@ function init() {
             info.style.display = 'flex';
             setTimeout(() => {
                 bodyScrollLock.disableBodyScroll(document.body);
+                bodyScrollLock.disableBodyScroll(info);
                 info.style.opacity = '1';
                 infoOpen = true;
             }, 100);
         };
     };
 
-    function closeInfo() {
-        if (infoOpen) {
+    function closeInfo(e) {
+        if (infoOpen && e.target.id !== 'mobLink') {
             info.style.opacity = '0';
             setTimeout(() => {
                 info.style.display = 'none';
                 infoOpen = false;
                 bodyScrollLock.enableBodyScroll(document.body);
+                bodyScrollLock.enableBodyScroll(info);
             }, 350);
         };
     };
 
     infoButton.addEventListener('click', () => {
         if (infoOpen) {
-            closeInfo();
+            closeInfo(e);
         } else {
             openInfo();
         };
