@@ -81,7 +81,7 @@ body {
 .workText {
     /* position: absolute; */
     max-width: 300px;
-    margin-top: 50px;
+    margin-top: 20vmin;
     font-style: italic;
     text-align: center;
 }
