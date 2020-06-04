@@ -9,9 +9,9 @@ app.use(compression());
 
 app.use(express.static('./public'));
 
-// app.get('/controlpanel', (req, res) => {
-//     res.redirect('http://nicholasm.byethost32.com/wp-admin');
-// });
+app.get('/ctrl', (req, res) => {
+    res.redirect('http://nicholasmarschner.dreamhosters.com/wp-admin');
+});
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
