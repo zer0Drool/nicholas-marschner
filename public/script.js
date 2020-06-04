@@ -74,8 +74,7 @@ axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/works/?per_pa
                 imgLoadCount++;
                 if (imgLoadCount === work[1].media.length) {
 
-                    console.log(`all imgs for ${work[0]} loaded`);
-                    console.log(worksImgs[work[0]][0].src);
+                    // console.log(`all imgs for ${work[0]} loaded`);
                     imgDiv.appendChild(worksImgs[work[0]][0]);
 
                     let workText = document.createElement('div');
@@ -198,8 +197,7 @@ axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/exhibitions/?
 
 
 function init() {
-    console.log('lets go');
-    console.log(worksImgs);
+    // console.log('lets go');
 
     clearInterval(loadingInt);
     title.innerText = 'Nicholas Marschner';
@@ -217,15 +215,11 @@ function init() {
 
     let worksImgsArr = Object.entries(worksImgs);
     for (var i = 0; i < worksImgsArr.length; i++) {
-        for (var j = 0; j < worksImgsArr[i][1].length; j++) {
-            console.log(worksImgsArr[i][1][j].src);
-        }
-        // console.log(worksImgsArr[i][]);
+        // for (var j = 0; j < worksImgsArr[i][1].length; j++) {
+        //     console.log(worksImgsArr[i][1][j].src);
+        // }
         positions[worksImgsArr[i][0]] = 0;
     };
-    console.log(worksImgs);
-
-    console.log(positions);
 
     for (var i = 0; i < workImgsXX.length; i++) {
         workImgsXX[i].addEventListener('click', (e) => {
