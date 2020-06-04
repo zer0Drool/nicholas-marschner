@@ -55,7 +55,7 @@ axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/works/?per_pa
     let workDivs = [];
     let allImgLoadCount = 0;
     let worksArr = Object.entries(works);
-    // console.log(worksArr);
+    console.log(worksArr);
 
     worksArr.map(work => {
         let workDiv = document.createElement('div');
@@ -215,32 +215,33 @@ function init() {
 
     let worksImgsArr = Object.entries(worksImgs);
     for (var i = 0; i < worksImgsArr.length; i++) {
-        // for (var j = 0; j < worksImgsArr[i][1].length; j++) {
-        //     console.log(worksImgsArr[i][1][j].src);
-        // }
         positions[worksImgsArr[i][0]] = 0;
     };
 
-    for (var i = 0; i < workImgsXX.length; i++) {
-        workImgsXX[i].addEventListener('click', (e) => {
-            if (!transitioning) {
-                transitioning = true;
-                positions[e.target.alt]++;
-                if (positions[e.target.alt] === worksImgs[e.target.alt].length) {
-                    positions[e.target.alt] = 0;
-                };
-                let targetX = e.target.parentNode;
-                targetX.style.opacity = '0';
-                setTimeout(function() {
-                    targetX.appendChild(worksImgs[e.target.alt][positions[e.target.alt]]);
-                    targetX.removeChild(targetX.children[0]);
-                    targetX.style.opacity = '1';
-                    setTimeout(() => {
-                        transitioning = false;
-                    }, 350);
-                }, 350);
+    function imgClick(e) {
+        if (!transitioning && worksImgs[e.target.alt].length > 1) {
+            console.log(worksImgs[e.target.alt]);
+            transitioning = true;
+            positions[e.target.alt]++;
+            if (positions[e.target.alt] === worksImgs[e.target.alt].length) {
+                positions[e.target.alt] = 0;
             };
-        });
+            console.log(positions[e.target.alt]);
+            let targetX = e.target.parentNode;
+            targetX.style.opacity = '0';
+            setTimeout(function() {
+                targetX.appendChild(worksImgs[e.target.alt][positions[e.target.alt]]);
+                targetX.removeChild(targetX.children[0]);
+                targetX.style.opacity = '1';
+                setTimeout(() => {
+                    transitioning = false;
+                }, 350);
+            }, 350);
+        };
+    };
+
+    for (var i = 0; i < workImgsXX.length; i++) {
+        workImgsXX[i].addEventListener('click', (e) => imgClick(e));
     };
 
     var infoButton = document.getElementById('infoButton');
