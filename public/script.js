@@ -23,8 +23,8 @@ let dataFetchCount = 0;
 let works = {};
 let worksWrap = document.getElementById('works');
 let worksImgs = {};
-axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/works/?per_page=100', { headers: {'Access-Control-Allow-Origin': 'http://nicholasm.byethost32.com'} })
-// axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/works/?per_page=100')
+// axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/works/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
+axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/works/?per_page=100')
 .then(res => {
     res.data.map(post => {
 
@@ -114,11 +114,11 @@ axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/works/?per_page=100', {
                 };
             };
             img.alt = work[0];
-            let urlX = work[1].media[i].url.split('78/');
-            let url = `${urlX[0]}78/nickysofttouch/${urlX[1]}`;
-            img.src = url;
+            // let urlX = work[1].media[i].url.split('78/');
+            // let url = `${urlX[0]}78/nickysofttouch/${urlX[1]}`;
+            // img.src = url;
+            img.src = work[1].media[i].url;
             worksImgs[work[0]].push(img);
-            // img.src = work[1].media[i].url;
 
         };
 
@@ -133,8 +133,8 @@ let mail = document.getElementById('mail');
 let insta = document.getElementById('insta');
 let phone = document.getElementById('phone');
 let infoText = document.getElementById('infoText');
-axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/info/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
-// axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/info/?per_page=100')
+// axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/info/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
+axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/info/?per_page=100')
 .then(res => {
 
         let data = res.data[0].acf;
@@ -166,8 +166,8 @@ axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/info/?per_page=100', { 
 // get exhibitions data
 let exhibitions = {};
 let exhibitionsWrap = document.getElementById('exhibitionsWrap');
-axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/exhibitions/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
-// axios.get('http://192.168.0.78/nickysofttouch/index.php/wp-json/wp/v2/exhibitions/?per_page=100')
+// axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/exhibitions/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
+axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/exhibitions/?per_page=100')
 .then(res => {
     res.data.map(post => {
 
