@@ -23,7 +23,7 @@ let dataFetchCount = 0;
 let works = {};
 let worksWrap = document.getElementById('works');
 let worksImgs = {};
-// axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/works/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
+
 axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/works/?per_page=100')
 .then(res => {
     res.data.map(post => {
@@ -106,7 +106,7 @@ axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/works/?per_pa
                             worksWrap.appendChild(workDivs[i]);
                         };
                         dataFetchCount++;
-                        if (dataFetchCount === 3) {
+                        if (dataFetchCount === 2) {
                             init();
                         };
                     };
@@ -132,7 +132,7 @@ let mail = document.getElementById('mail');
 let insta = document.getElementById('insta');
 let phone = document.getElementById('phone');
 let infoText = document.getElementById('infoText');
-// axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/info/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
+axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/info/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
 axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/info/?per_page=100')
 .then(res => {
 
@@ -155,45 +155,45 @@ axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/info/?per_pag
     infoText.innerHTML = information.bio;
 
     dataFetchCount++;
-    if (dataFetchCount === 3) {
+    if (dataFetchCount === 2) {
         init();
     };
 
 })
 .catch(err => console.log('error fetching info >>> ', err));
-
-// get exhibitions data
-let exhibitions = {};
-let exhibitionsWrap = document.getElementById('exhibitionsWrap');
-// axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/exhibitions/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
-axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/exhibitions/?per_page=100')
-.then(res => {
-    res.data.map(post => {
-
-        let exhibition = post.acf;
-        let title = post.title.rendered;
-        exhibitions[title] = {
-            location: exhibition.location,
-            year: exhibition.year
-        };
-
-    });
-})
-.then(() => {
-
-    let exhibitionsArr = Object.entries(exhibitions);
-    for (var i = 0; i < exhibitionsArr.length; i++) {
-        exhibitionsWrap.innerHTML = exhibitionsWrap.innerHTML + `<p>${exhibitionsArr[i][0]} - ${exhibitionsArr[i][1].location} - ${exhibitionsArr[i][1].year}</p>`;
-        if (i === exhibitionsArr.length - 1) {
-            dataFetchCount++;
-            if (dataFetchCount === 3) {
-                init();
-            };
-        };
-    };
-
-})
-.catch(err => console.log('error fetching exhibitions >>> ', err));
+//
+// // get exhibitions data
+// let exhibitions = {};
+// let exhibitionsWrap = document.getElementById('exhibitionsWrap');
+// // axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/exhibitions/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
+// // axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/exhibitions/?per_page=100')
+// .then(res => {
+//     res.data.map(post => {
+//
+//         let exhibition = post.acf;
+//         let title = post.title.rendered;
+//         exhibitions[title] = {
+//             location: exhibition.location,
+//             year: exhibition.year
+//         };
+//
+//     });
+// })
+// .then(() => {
+//
+//     let exhibitionsArr = Object.entries(exhibitions);
+//     for (var i = 0; i < exhibitionsArr.length; i++) {
+//         exhibitionsWrap.innerHTML = exhibitionsWrap.innerHTML + `<p>${exhibitionsArr[i][0]} - ${exhibitionsArr[i][1].location} - ${exhibitionsArr[i][1].year}</p>`;
+//         if (i === exhibitionsArr.length - 1) {
+//             dataFetchCount++;
+//             if (dataFetchCount === 3) {
+//                 init();
+//             };
+//         };
+//     };
+//
+// })
+// .catch(err => console.log('error fetching exhibitions >>> ', err));
 
 
 function init() {
