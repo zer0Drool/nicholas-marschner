@@ -18,6 +18,7 @@ function loading() {
 loadingInt = setInterval(loading, 250);
 
 let dataFetchCount = 0;
+let dataFetchTotal = 0;
 
 // get work data
 let works = {};
@@ -26,6 +27,11 @@ let worksImgs = {};
 
 axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/works/?per_page=100')
 .then(res => {
+
+    if (res.data.length) {
+        dataFetchTotal++;
+    };
+
     res.data.map(post => {
 
         let work = post.acf;
@@ -49,13 +55,13 @@ axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/works/?per_pa
         };
 
     });
+
 })
 .then(() => {
 
     let workDivs = [];
     let allImgLoadCount = 0;
     let worksArr = Object.entries(works);
-    console.log(worksArr);
 
     worksArr.map(work => {
         let workDiv = document.createElement('div');
@@ -74,7 +80,6 @@ axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/works/?per_pa
                 imgLoadCount++;
                 if (imgLoadCount === work[1].media.length) {
 
-                    // console.log(`all imgs for ${work[0]} loaded`);
                     imgDiv.appendChild(worksImgs[work[0]][0]);
 
                     let workText = document.createElement('div');
@@ -106,7 +111,7 @@ axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/works/?per_pa
                             worksWrap.appendChild(workDivs[i]);
                         };
                         dataFetchCount++;
-                        if (dataFetchCount === 2) {
+                        if (dataFetchCount === dataFetchTotal) {
                             init();
                         };
                     };
@@ -132,17 +137,21 @@ let mail = document.getElementById('mail');
 let insta = document.getElementById('insta');
 let phone = document.getElementById('phone');
 let infoText = document.getElementById('infoText');
-axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/info/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
+// axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/info/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
 axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/info/?per_page=100')
 .then(res => {
 
-        let data = res.data[0].acf;
-        information = {
-            bio: data.bio,
-            insta: data.insta,
-            mail: data.mail,
-            phone: data.phone
-        };
+    if (res.data.length) {
+        dataFetchTotal++;
+    };
+
+    let data = res.data[0].acf;
+    information = {
+        bio: data.bio,
+        insta: data.insta,
+        mail: data.mail,
+        phone: data.phone
+    };
 
 })
 .then(() => {
@@ -155,49 +164,54 @@ axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/info/?per_pag
     infoText.innerHTML = information.bio;
 
     dataFetchCount++;
-    if (dataFetchCount === 2) {
+    if (dataFetchCount === dataFetchTotal) {
         init();
     };
 
 })
 .catch(err => console.log('error fetching info >>> ', err));
-//
-// // get exhibitions data
-// let exhibitions = {};
-// let exhibitionsWrap = document.getElementById('exhibitionsWrap');
-// // axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/exhibitions/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
-// // axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/exhibitions/?per_page=100')
-// .then(res => {
-//     res.data.map(post => {
-//
-//         let exhibition = post.acf;
-//         let title = post.title.rendered;
-//         exhibitions[title] = {
-//             location: exhibition.location,
-//             year: exhibition.year
-//         };
-//
-//     });
-// })
-// .then(() => {
-//
-//     let exhibitionsArr = Object.entries(exhibitions);
-//     for (var i = 0; i < exhibitionsArr.length; i++) {
-//         exhibitionsWrap.innerHTML = exhibitionsWrap.innerHTML + `<p>${exhibitionsArr[i][0]} - ${exhibitionsArr[i][1].location} - ${exhibitionsArr[i][1].year}</p>`;
-//         if (i === exhibitionsArr.length - 1) {
-//             dataFetchCount++;
-//             if (dataFetchCount === 3) {
-//                 init();
-//             };
-//         };
-//     };
-//
-// })
-// .catch(err => console.log('error fetching exhibitions >>> ', err));
+
+// get exhibitions data
+let exhibitions = {};
+let exhibitionsWrap = document.getElementById('exhibitionsWrap');
+// axios.get('http://nicholasm.byethost32.com/wp-json/wp/v2/exhibitions/?per_page=100', { headers: {'Access-Control-Allow-Origin': '*'} })
+axios.get('http://nicholasmarschner.dreamhosters.com/wp-json/wp/v2/exhibitions/?per_page=100')
+.then(res => {
+
+    if (res.data.length) {
+        dataFetchTotal++;
+    };
+
+    res.data.map(post => {
+
+        let exhibition = post.acf;
+        let title = post.title.rendered;
+        exhibitions[title] = {
+            location: exhibition.location,
+            year: exhibition.year
+        };
+
+    });
+
+})
+.then(() => {
+
+    let exhibitionsArr = Object.entries(exhibitions);
+    for (var i = 0; i < exhibitionsArr.length; i++) {
+        exhibitionsWrap.innerHTML = exhibitionsWrap.innerHTML + `<p>${exhibitionsArr[i][0]} - ${exhibitionsArr[i][1].location} - ${exhibitionsArr[i][1].year}</p>`;
+        if (i === exhibitionsArr.length - 1) {
+            dataFetchCount++;
+            if (dataFetchCount === dataFetchTotal) {
+                init();
+            };
+        };
+    };
+
+})
+.catch(err => console.log('error fetching exhibitions >>> ', err));
 
 
 function init() {
-    // console.log('lets go');
 
     clearInterval(loadingInt);
     title.innerText = 'Nicholas Marschner';
@@ -220,13 +234,11 @@ function init() {
 
     function imgClick(e) {
         if (!transitioning && worksImgs[e.target.alt].length > 1) {
-            console.log(worksImgs[e.target.alt]);
             transitioning = true;
             positions[e.target.alt]++;
             if (positions[e.target.alt] === worksImgs[e.target.alt].length) {
                 positions[e.target.alt] = 0;
             };
-            console.log(positions[e.target.alt]);
             let targetX = e.target.parentNode;
             targetX.style.opacity = '0';
             setTimeout(function() {
